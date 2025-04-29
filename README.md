@@ -5,7 +5,7 @@ Find your config/web.php (or similar config file), and inside the components sec
 
 
 Edit
-'components' => [
+'components' => [fsfdf
     'request' => [
         // !!! insert a secret key here (this is required by cookie validation)
         'cookieValidationKey' => 'your-very-secret-random-string',
