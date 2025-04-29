@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t santoshbd67/yiiphp:latest .
+        docker build -f Dockerfile -t santoshbd67/yiiphp:latest .
         docker push santoshbd67/yiiphp:latest
 
     - name: SSH into EC2 and update service
