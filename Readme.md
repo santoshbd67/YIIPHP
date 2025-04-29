@@ -144,7 +144,61 @@ ansible-playbook -i inventory.ini setup.yml
 
 # Application Deployment
 
-I have manually created the source code for this application using Composer, which is available in this GitHub repository.
+I have manually created the source code for this application using Composer, which is available in this GitHub repository
+
+# Application Deployment using GitHub Actions
+
+I have created a `main.yml` file for the GitHub Action, which is located in the `.github/workflows/main.yml` directory. Below is the content of that file:
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Print Working Directory (debugging step)
+      run: pwd
+
+    - name: List Files (debugging step)
+      run: ls -la
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -f src/Dockerfile -t santoshbd67/yiiphp:latest src/
+        docker push santoshbd67/yiiphp:latest
+
+    - name: SSH into EC2 and update service
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.EC2_PUBLIC_IP }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker pull santoshbd67/yiiphp:latest
+          docker service update --image santoshbd67/yiiphp:latest yii2app
+
+
 
 
 
