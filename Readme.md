@@ -140,4 +140,16 @@ ansible-playbook -i inventory.ini setup.yml
 #### NGINX, Git, PHP installed
 
 
+---
+
+# Application Deployment
+
+I have manually created the source code for this application using Composer, which is available in this GitHub repository.
+
+
+
+
+
+
+
 
