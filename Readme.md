@@ -197,8 +197,18 @@ jobs:
         script: |
           docker pull santoshbd67/yiiphp:latest
           docker service update --image santoshbd67/yiiphp:latest yii2app
+```
 
 
+## Make sure to set the appropriate secrets in the GitHub repository settings:
+
+### DOCKER_USERNAME
+
+### DOCKER_PASSWORD
+
+### EC2_PUBLIC_IP
+
+### EC2_SSH_KEY
 
 
 
