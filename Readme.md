@@ -210,6 +210,10 @@ jobs:
 
 ### EC2_SSH_KEY
 
+<img width="917" alt="image" src="https://github.com/user-attachments/assets/07460ffc-ed30-468a-8040-a725438641bd" />
+
+
+<img width="944" alt="image" src="https://github.com/user-attachments/assets/5dc19cdd-fbc3-4be0-8f59-418b784146e7" />
 
 
 
