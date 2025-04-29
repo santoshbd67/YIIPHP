@@ -13,10 +13,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
       with:
-        fetch-depth: 1  # Ensures full checkout
+        fetch-depth: 1
 
-    - name: Print Working Directory
+    - name: Print Working Directory (debugging step)
       run: pwd
+
+    - name: List Files (debugging step)
+      run: ls -la
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -39,4 +42,5 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
+          docker pull santoshbd67/yiiphp:latest
           docker service update --image santoshbd67/yiiphp:latest yii2app
