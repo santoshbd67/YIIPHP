@@ -1,0 +1,60 @@
+---
+- name: Infrastructure Setup with Ansible
+  hosts: servers
+  become: true
+
+  tasks:
+    - name: Install necessary system packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - gnupg-agent
+          - git
+          - nginx
+          - php
+          - php-fpm
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Enable and start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Initialize Docker Swarm
+      shell: |
+        docker swarm init
+      args:
+        creates: /tmp/swarm_initialized
+      register: swarm_init_result
+      changed_when: swarm_init_result.rc == 0
+
+    - name: Create a marker file for Swarm Init
+      file:
+        path: /tmp/swarm_initialized
+        state: touch
+      when: swarm_init_result.rc == 0
