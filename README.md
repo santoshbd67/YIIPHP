@@ -3,8 +3,7 @@ You need to set a value for cookieValidationKey in your config/web.php file.
 
 Find your config/web.php (or similar config file), and inside the components section, add or update the request component like this:
 
-php
-Copy
+
 Edit
 'components' => [
     'request' => [
